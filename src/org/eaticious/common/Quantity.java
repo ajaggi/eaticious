@@ -34,6 +34,13 @@ public interface Quantity extends Serializable {
 	 * @return
 	 */
 	Quantity convert(Unit unit) throws IllegalArgumentException;
+	
+	/**
+	 * 
+	 * @param comparator
+	 * @return true if this is greater than comparator, false otherwise
+	 */
+	public boolean greaterThan(Object comparator) ;
 
 	void add(Quantity co2eForRoute);
 

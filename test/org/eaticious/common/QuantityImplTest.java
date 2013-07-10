@@ -86,5 +86,12 @@ public class QuantityImplTest {
 		Quantity second = new QuantityImpl(1000.1, Unit.LITRE);
 		assertFalse(first.equals(second));
 	}
+	
+	@Test
+	public void testGreaterThan() {
+		Quantity first = new QuantityImpl(1d, Unit.KILOGRAM);
+		Quantity second = new QuantityImpl(1000.1, Unit.GRAM);
+		assertTrue(!first.greaterThan(second));
+	}
 
 }

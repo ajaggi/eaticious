@@ -62,6 +62,19 @@ public class QuantityImpl implements Quantity {
 		}
 		return result;
 	}
+	
+	//APPROVE 
+	@Override
+	public boolean greaterThan(Object comparator) {
+		boolean result;
+		if(comparator instanceof Quantity && this.getUnit().getDimension() == ((Quantity)comparator).getUnit().getDimension()){
+			Double amountToCompare = ((Quantity)comparator).convert(this.getUnit()).getAmount();
+			result = this.getAmount() > amountToCompare;
+		} else {
+			result = false;
+		}
+		return result;
+	}
 
 	@Override
 	public void add(Quantity add) {
