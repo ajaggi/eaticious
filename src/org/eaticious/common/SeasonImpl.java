@@ -6,6 +6,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import com.googlecode.objectify.annotation.Embed;
+
 /**
  * This class represents Seasons meaning timespans between two dates not regarding the year of the dates.
  * It may be used to defined periodic / recurring seasons such as growing seasons of vegetables that only depend on day and month.
@@ -13,6 +15,7 @@ import java.util.GregorianCalendar;
  * @author Sven Peetz
  *
  */
+@Embed
 public class SeasonImpl implements Season {
 
 	private static final long serialVersionUID = -2223462345733478L;
