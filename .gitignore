@@ -6,3 +6,4 @@
 /.pmd
 .classpath
 /war/WEB-INF/web.xml
+.idea/workspace.xml
