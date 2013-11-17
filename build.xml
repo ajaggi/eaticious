@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<project name="eaticious" default="dist" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
+
+  <property name="version" value="0.0.1.0" />
+  <property environment="env"/>
+  <property name="gwt.args" value="" />
+
+  <target name="dependencies">
+    <get src="http://repo1.maven.org/maven2/org/apache/ivy/ivy/2.3.0/ivy-2.3.0.jar" dest=".ivy.jar" skipexisting="true"/>
+    <taskdef resource="org/apache/ivy/ant/antlib.xml" uri="antlib:org.apache.ivy.ant" classpath=".ivy.jar"/>
+    <ivy:cachepath organisation="com.google.gwt" module="gwt-user" revision="2.5.1" pathid="lib.gwt-user" inline="true" log="quiet"/>
+    <ivy:cachepath organisation="com.google.gwt" module="gwt-dev" revision="2.5.1" pathid="lib.gwt-dev" inline="true" log="quiet"/>
+    <ivy:cachepath organisation="com.google.gwt" module="gwt-codeserver" revision="2.5.1" pathid="lib.gwt-codeserver" inline="true" log="quiet"/>
+    <ivy:cachepath organisation="javax.validation" module="validation-api" revision="1.1.0.Final" pathid="lib.validation" inline="true" log="quiet"/>
+    <ivy:cachepath organisation="org.glassfish.embedded" module="maven-embedded-glassfish-plugin" revision="3.1.2.2" pathid="lib.glassfish" inline="true" log="quiet"/>
+    <ivy:cachepath organisation="com.googlecode.objectify" module="objectify" revision="4.0b3" pathid="lib.objectify" inline="true" log="quiet"/>
+    <!-- Avoid build errors due to missing java.lang.reflect.Method -->
+    <delete file="/home/${env.USER}/.ivy2/cache/javax.validation/validation-api/sources/validation-api-1.1.0.Final-sources.jar" />
+  </target>
+
+  <path id="project.class.path">
+    <pathelement location="war/WEB-INF/classes"/>
+    <path refid="lib.gwt-user"/>
+    <path refid="lib.gwt-dev"/>
+    <path refid="lib.gwt-codeserver"/>
+    <fileset dir="war/WEB-INF/lib" includes="**/*.jar"/>
+    <path refid="lib.objectify"/>
+  </path>
+
+  <target name="libs" depends="dependencies" description="Copy libs to WEB-INF/lib">
+    <mkdir dir="war/WEB-INF/lib" />
+    <mkdir dir="war/WEB-INF/classes" />
+    <copy todir="war/WEB-INF/lib" flatten="true">
+      <path refid="project.class.path"/>
+    </copy>
+  </target>
+
+  <target name="javac" depends="libs" description="Compile java source to bytecode">
+    <mkdir dir="war/WEB-INF/classes"/>
+    <javac srcdir="src" includes="**" encoding="utf-8"
+        destdir="war/WEB-INF/classes"
+        source="1.5" target="1.5" nowarn="true"
+        debug="true" debuglevel="lines,vars,source"
+        includeantruntime="false">
+      <classpath refid="project.class.path"/>
+    </javac>
+    <copy todir="war/WEB-INF/classes">
+      <fileset dir="src" excludes="**/*.java"/>
+    </copy>
+  </target>
+
+  <target name="gwtc" depends="javac" description="GWT compile to JavaScript (production mode)">
+    <java failonerror="true" fork="true" classname="com.google.gwt.dev.Compiler">
+      <classpath>
+        <pathelement location="src"/>
+        <path refid="project.class.path"/>
+        <path refid="lib.validation" />
+      </classpath>
+      <jvmarg value="-Xmx256M"/>
+      <arg line="-war"/>
+      <arg value="war"/>
+      <arg line="${gwt.args}"/>
+      <arg value="org.eaticious.common"/>
+    </java>
+  </target>
+
+  <target name="build" depends="gwtc" description="Build this project" />
+
+  <target name="dist" depends="build" description="Create a war file">
+    <zip destfile="eaticious-common-${version}.jar" basedir="war"/>
+  </target>
+
+  <target name="clean" description="Cleans this project">
+    <delete dir="war/WEB-INF/classes" failonerror="false" />
+    <delete dir="gwt-unitCache" failonerror="false" />
+    <delete dir="war/WEB-INF/lib" failonerror="false" />
+    <delete dir="war/WEB-INF/deploy" failonerror="false" />
+    <delete dir="war/org.eaticious.common" failonerror="false" />
+    <delete file="eaticious-common-${version}.jar" failonerror="false" />
+  </target>
+
+</project>
