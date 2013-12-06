@@ -1,11 +1,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>src.org.eatitcious</groupId>
-	<artifactId>common</artifactId>
-	<packaging>pom</packaging>
+	<groupId>org.eaticious</groupId>
+	<artifactId>eaticious</artifactId>
+	<packaging>jar</packaging>
 	<version>1.0-SNAPSHOT</version>
-	<name>src.org.eaticious.Common</name>
+	<name>eaticious</name>
 	
 	
 	
@@ -122,23 +122,8 @@
     <outputDirectory>target/classes</outputDirectory>
     <finalName>${project.artifactId}-${project.version}</finalName>
     <testOutputDirectory>target/test-classes</testOutputDirectory>
-    <sourceDirectory>src/org/eatitcious</sourceDirectory>
-    <scriptSourceDirectory>src/org/eatitcious/scripts</scriptSourceDirectory>
     <testSourceDirectory>test/org/eaticious/common</testSourceDirectory>
-    <resources>
-      <resource>
-        <directory>resources</directory>
-      </resource>
-    </resources>
-    <testResources>
-      <testResource>
-        <directory>resources</directory>
-      </testResource>
-    </testResources>
-    
-    
-    
-    
+
     <plugins>
 
       <plugin>
@@ -159,7 +144,7 @@
         </dependencies>
       </plugin>
 
-     
+
 
       <!-- Google App Engine plugin -->
       <plugin>
@@ -198,7 +183,7 @@
         </configuration>
       </plugin>
 
-    
+
     </plugins>
 
     <!-- Required by m2e for import into eclipse. No effect on command line builds  -->
@@ -230,10 +215,10 @@
         </plugin>
       </plugins>
     </pluginManagement>
-    
-    
-    
-    
+
+
+
+
   </build>
 
   <reporting>
@@ -289,20 +274,51 @@
               <updateReleaseInfo>true</updateReleaseInfo>
             </configuration>
           </plugin>
-          
-          
-          
-          
-          
-          
-          
-          
-          
+
+
+
+
+
+
+
+
+
         </plugins>
       </build>
     </profile>
-  </profiles>
-	
 
-  
+    <profile>
+          <id>common-jar-build</id>
+          <build>
+              <plugins>
+
+                  <plugin>
+                      <groupId>org.apache.maven.plugins</groupId>
+                      <artifactId>maven-jar-plugin</artifactId>
+                      <version>2.4</version>
+                      <executions>
+                          <execution>
+                              <phase>package</phase>
+                              <goals>
+                                  <goal>jar</goal>
+                              </goals>
+                              <configuration>
+                                  <classifier>common</classifier>
+                                  <excludes>
+                                      <exclude>org/eaticious/eaternity/**</exclude>
+                                      <exclude>org/eaticious/greenlicious/**</exclude>
+                                  </excludes>
+                              </configuration>
+                          </execution>
+                      </executions>
+                  </plugin>
+
+              </plugins>
+          </build>
+    </profile>
+
+  </profiles>
+
+
+
 </project>
