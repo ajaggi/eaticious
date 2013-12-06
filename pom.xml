@@ -290,8 +290,18 @@
     <profile>
           <id>common-jar-build</id>
           <build>
-              <plugins>
 
+              <resources>
+                  <resource>
+                      <directory>src/main/resources</directory>
+                  </resource>
+
+                  <resource>
+                      <directory>src/main/java</directory>
+                  </resource>
+              </resources>
+
+              <plugins>
                   <plugin>
                       <groupId>org.apache.maven.plugins</groupId>
                       <artifactId>maven-jar-plugin</artifactId>
@@ -312,8 +322,8 @@
                           </execution>
                       </executions>
                   </plugin>
-
               </plugins>
+
           </build>
     </profile>
 
