@@ -1,8 +1,7 @@
 package org.eaticious.common;
 
-import com.googlecode.objectify.annotation.Embed;
+import java.io.Serializable;
 
-@Embed
 public class QuantityImpl implements Quantity {
 	
 	private static final long serialVersionUID = -2234968030318875678L;
