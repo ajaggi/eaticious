@@ -1,334 +1,107 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.eaticious</groupId>
-	<artifactId>eaticious</artifactId>
-	<packaging>jar</packaging>
-	<version>1.0-SNAPSHOT</version>
-	<name>eaticious</name>
-	
-	
-	
-	<properties>
-    <!-- Convenience property to set the GWT version -->
-    <gwtVersion>2.5.1</gwtVersion>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
-    <!-- GWT needs at least java 1.6 -->
-    <maven.compiler.source>1.6</maven.compiler.source>
-    <maven.compiler.target>1.6</maven.compiler.target>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.eaticious</groupId>
+    <artifactId>eaticious</artifactId>
+    <packaging>jar</packaging>
+    <version>1.0-SNAPSHOT</version>
+    <name>eaticious</name>
 
-    <!-- GAE properties -->
-    <gae.version>1.7.7</gae.version>
-    <gae.home>${user.home}/.m2/repository/com/google/appengine/appengine-java-sdk/${gae.version}/appengine-java-sdk-${gae.version}</gae.home>
-    <gae.application.version>1</gae.application.version>
-    <!--
-    <webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
-    -->
-    <webappDirectory>${basedir}</webappDirectory>
-
-    <!-- Don't let your Mac use a crazy non-standard encoding -->
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-  </properties>
-  
-  
-  <dependencies>
-    <!-- Google Web Toolkit (GWT) -->
-
-    <dependency>
-      <groupId>com.google.gwt</groupId>
-      <artifactId>gwt-user</artifactId>
-      <version>${gwtVersion}</version>
-      <!-- "provided" so that we don't deploy -->
-      <scope>provided</scope>
-    </dependency>
-
-    <!-- GWT projects do not usually need a dependency on gwt-dev, but MobileWebApp
-         contains a GWTC Linker (AppCacheLinker) which in turn depends on internals
-         of the GWT compiler.  -->
-    <dependency>
-      <groupId>com.google.gwt</groupId>
-      <artifactId>gwt-dev</artifactId>
-      <version>${gwtVersion}</version>
-    
-      <scope>provided</scope>
-    </dependency>  <!-- "provided" so that we don't deploy -->
-    
-    <dependency>
-	  <groupId>com.google.gwt</groupId>
-	  <artifactId>gwt-servlet</artifactId>
-	  <version>${gwtVersion}</version>
-	  <scope>runtime</scope>
-	</dependency>
-
-    <!-- RequestFactory server -->
-
-    <dependency>
-      <groupId>com.google.web.bindery</groupId>
-      <artifactId>requestfactory-server</artifactId>
-      <version>${gwtVersion}</version>
-    </dependency>
-
-  
-    <!-- Google App Engine (GAE) -->
-    <dependency>
-      <groupId>com.google.appengine</groupId>
-      <artifactId>appengine-api-1.0-sdk</artifactId>
-      <version>${gae.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>com.google.appengine</groupId>
-      <artifactId>appengine-testing</artifactId>
-      <version>${gae.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.google.appengine</groupId>
-      <artifactId>appengine-api-stubs</artifactId>
-      <version>${gae.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.google.appengine</groupId>
-      <artifactId>appengine-api-labs</artifactId>
-      <version>${gae.version}</version>
-    </dependency>
-
-    <!-- Objectify for persistence. It uses the stock javax.persistence annotations -->
-
-    <dependency>
-      <groupId>com.googlecode.objectify</groupId>
-      <artifactId>objectify</artifactId>
-      <version>4.0b1</version>
-    </dependency>
-    <dependency>
-      <groupId>javax.persistence</groupId>
-      <artifactId>persistence-api</artifactId>
-      <version>1.0</version>
-    </dependency>
-  
-      <!-- Unit tests -->
-
-      <dependency>
-          <groupId>junit</groupId>
-          <artifactId>junit</artifactId>
-          <version>4.10</version>
-      </dependency>
-
-	</dependencies>
-	
-	<build>
-    <directory>target</directory>
-    <outputDirectory>target/classes</outputDirectory>
-    <finalName>${project.artifactId}-${project.version}</finalName>
-    <testOutputDirectory>target/test-classes</testOutputDirectory>
-    <testSourceDirectory>test/org/eaticious/common</testSourceDirectory>
-
-    <plugins>
-
-      <plugin>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>2.4</version>
-        <configuration>
-          <source>1.6</source>
-          <target>1.6</target>
-        </configuration>
+    <dependencyManagement>
         <dependencies>
-          <!-- Need to run the RF Validation tool. This works on both the command-line
-               and in Eclipse, provided that m2e-apt is installed. -->
-          <dependency>
-            <groupId>com.google.web.bindery</groupId>
-            <artifactId>requestfactory-apt</artifactId>
-            <version>${gwtVersion}</version>
-          </dependency>
+
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>4.10</version>
+                <scope>runtime</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>javax.persistence</groupId>
+                <artifactId>persistence-api</artifactId>
+                <version>1.0</version>
+                <scope>runtime</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.googlecode.objectify</groupId>
+                <artifactId>objectify</artifactId>
+                <version>4.0b1</version>
+                <scope>runtime</scope>
+            </dependency>
+
         </dependencies>
-      </plugin>
+    </dependencyManagement>
 
+    <dependencies>
 
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
 
-      <!-- Google App Engine plugin -->
-      <plugin>
-        <groupId>net.kindleit</groupId>
-        <artifactId>maven-gae-plugin</artifactId>
-        <version>0.8.1</version>
-        <executions>
-          <execution>
-            <phase>validate</phase>
-            <goals>
-              <goal>unpack</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
+        <dependency>
+            <groupId>javax.persistence</groupId>
+            <artifactId>persistence-api</artifactId>
+            <scope>compile</scope>
+        </dependency>
 
-      <!-- Add source folders to test classpath in order to run gwt-tests as normal junit-tests -->
-      <plugin>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <version>2.5</version>
-        <configuration>
-          <additionalClasspathElements>
-            <additionalClasspathElement>${project.build.sourceDirectory}</additionalClasspathElement>
-            <additionalClasspathElement>${project.build.testSourceDirectory}</additionalClasspathElement>
-          </additionalClasspathElements>
-          <useManifestOnlyJar>false</useManifestOnlyJar>
-          <forkMode>always</forkMode>
+        <dependency>
+            <groupId>com.googlecode.objectify</groupId>
+            <artifactId>objectify</artifactId>
+            <scope>compile</scope>
+        </dependency>
 
-          <!-- Folder for generated testing stuff -->
-          <systemProperties>
-            <property>
-              <name>gwt.args</name>
-              <value>-out ${project.build.directory}/${project.build.finalName}</value>
-            </property>
-          </systemProperties>
-        </configuration>
-      </plugin>
+    </dependencies>
 
+    <profiles>
 
-    </plugins>
+        <profile>
+            <id>common-jar-build</id>
+            <build>
 
-    <!-- Required by m2e for import into eclipse. No effect on command line builds  -->
-    <pluginManagement>
-      <plugins>
-        <plugin>
-          <groupId>org.eclipse.m2e</groupId>
-          <artifactId>lifecycle-mapping</artifactId>
-          <version>1.0.0</version>
-          <configuration>
-            <lifecycleMappingMetadata>
-              <pluginExecutions>
-                <pluginExecution>
-                  <pluginExecutionFilter>
-                    <groupId>net.kindleit</groupId>
-                    <artifactId>maven-gae-plugin</artifactId>
-                    <versionRange>[0.7.3,)</versionRange>
-                    <goals>
-                      <goal>unpack</goal>
-                    </goals>
-                  </pluginExecutionFilter>
-                  <action>
-                    <execute />
-                  </action>
-                </pluginExecution>
-              </pluginExecutions>
-            </lifecycleMappingMetadata>
-          </configuration>
-        </plugin>
-      </plugins>
-    </pluginManagement>
+                <resources>
+                    <resource>
+                        <directory>src/main/resources</directory>
+                    </resource>
 
+                    <resource>
+                        <directory>src/main/java</directory>
+                    </resource>
 
+                </resources>
 
+                <plugins>
 
-  </build>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-jar-plugin</artifactId>
+                        <version>2.4</version>
+                        <executions>
+                            <execution>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                                <configuration>
+                                    <classifier>common</classifier>
+                                    <excludes>
+                                        <exclude>org/eaticious/eaternity/**</exclude>
+                                        <exclude>org/eaticious/greenlicious/**</exclude>
+                                    </excludes>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
 
-  <reporting>
-    <outputDirectory>target/site</outputDirectory>
-  </reporting>
+                </plugins>
 
-  <profiles>
-    <profile>
-      <id>release-profile</id>
+            </build>
+        </profile>
 
-      <activation>
-        <property>
-          <name>performRelease</name>
-        </property>
-      </activation>
-
-      <build>
-        <plugins>
-          <plugin>
-            <inherited>true</inherited>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-source-plugin</artifactId>
-
-            <executions>
-              <execution>
-                <id>attach-sources</id>
-                <goals>
-                  <goal>jar</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-          <plugin>
-            <inherited>true</inherited>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-javadoc-plugin</artifactId>
-
-            <executions>
-              <execution>
-                <id>attach-javadocs</id>
-                <goals>
-                  <goal>jar</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-          <plugin>
-            <inherited>true</inherited>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-deploy-plugin</artifactId>
-
-            <configuration>
-              <updateReleaseInfo>true</updateReleaseInfo>
-            </configuration>
-          </plugin>
-
-
-
-
-
-
-
-
-
-        </plugins>
-      </build>
-    </profile>
-
-    <profile>
-          <id>common-jar-build</id>
-          <build>
-
-              <resources>
-                  <resource>
-                      <directory>src/main/resources</directory>
-                  </resource>
-
-                  <resource>
-                      <directory>src/main/java</directory>
-                  </resource>
-              </resources>
-
-              <plugins>
-                  <plugin>
-                      <groupId>org.apache.maven.plugins</groupId>
-                      <artifactId>maven-jar-plugin</artifactId>
-                      <version>2.4</version>
-                      <executions>
-                          <execution>
-                              <phase>package</phase>
-                              <goals>
-                                  <goal>jar</goal>
-                              </goals>
-                              <configuration>
-                                  <classifier>common</classifier>
-                                  <excludes>
-                                      <exclude>org/eaticious/eaternity/**</exclude>
-                                      <exclude>org/eaticious/greenlicious/**</exclude>
-                                  </excludes>
-                              </configuration>
-                          </execution>
-                      </executions>
-                  </plugin>
-              </plugins>
-
-          </build>
-    </profile>
-
-  </profiles>
-
-
+    </profiles>
 
 </project>
