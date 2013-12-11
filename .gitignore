@@ -2,15 +2,7 @@
 /war/WEB-INF/classes
 /war/WEB-INF/appengine-web.xml
 /war/WEB-INF/lib
-/war/WEB-INF/deploy
-/war/org.eaticious.common
 /reports
 /.pmd
 .classpath
 /war/WEB-INF/web.xml
-.idea/workspace.xml
-.gwtup.jar
-.ivy.jar
-eaticious-common-*.jar
-gwt-unitCache
-
